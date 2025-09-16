@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>My first GOI plugin</Description>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <RestoreAdditionalProjectSources>
+      https://api.nuget.org/v3/index.json;
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.samboy.dev/v3/index.json
+    </RestoreAdditionalProjectSources>
+    <RootNamespace>Flaccid</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='B5'">
+    <OutputPath>Release/Flaccid.BepInEx5/</OutputPath>
+    <AssemblyName>Flaccid.BepInEx5</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='B6'">
+    <OutputPath>Release/Flaccid.BepInEx6/</OutputPath>
+    <AssemblyName>Flaccid.BepInEx6</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(Configuration)'=='B5'">
+    <PackageReference Include="BepInEx.Core" Version="5.*" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='B6'">
+    <PackageReference Include="BepInEx.Unity" Version="6.0.0-*" />
+  </ItemGroup>
+
+  <!--
+    if you want to use a type within the Assembly-CSharp, uncomment below,
+    if you need to add more references, do it within this itemgroup by copying
+    the reference and adjusting the hintpath and include
+  -->
+  <!-- <ItemGroup> -->
+    <!-- <Reference Include="Assembly-CSharp"> -->
+      <!-- <HintPath>lib/netstandard2.0/Assembly-CSharp.dll</HintPath> -->
+    <!-- </Reference> -->
+  <!-- </ItemGroup> -->
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+	  <PackageReference Include="UnityEngine.Modules" Version="2020.3.25" IncludeAssets="compile" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+  </ItemGroup>
+</Project>
